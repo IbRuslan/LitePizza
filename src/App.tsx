@@ -1,10 +1,11 @@
 import React from 'react';
-
 import './scss/app.scss'
 import {Header} from "./Components/Header";
 import {Categories} from "./Components/Categories";
 import {Sort} from "./Components/Sort";
 import {PizzaContent} from "./Components/PizzaContent";
+
+import pizzas from './assets/pizza.json'
 
 
 const App = () => {
@@ -19,15 +20,9 @@ const App = () => {
                     </div>
                     <h2 className="content__title">Все пиццы</h2>
                     <div className="content__items">
-                        <PizzaContent/>
-                        <PizzaContent/>
-                        <PizzaContent/>
-                        <PizzaContent/>
-                        <PizzaContent/>
-                        <PizzaContent/>
-                        <PizzaContent/>
-                        <PizzaContent/>
-                        <PizzaContent/>
+                        {
+                            pizzas.map((p)=><PizzaContent key={p.id} pizza={p} />)
+                        }
                     </div>
                 </div>
             </div>
