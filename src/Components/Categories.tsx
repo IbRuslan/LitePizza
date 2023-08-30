@@ -15,7 +15,7 @@ export const Categories = () => {
             <ul>
                 {
                     categories.map((c, i) =>
-                    <li onClick={()=> onClickCategoryHandler(i)} className={active === i ? 'active' : ''} >{c}</li>)
+                    <li key={i} onClick={()=> onClickCategoryHandler(i)} className={active === i ? 'active' : ''} >{c}</li>)
                 }
             </ul>
         </div>

@@ -1,8 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 
 export const Sort = () => {
+
+    const [selected, setSelected] = useState('популярности')
+
+    const [open, setOpen] = useState(false)
+
+    const menu = ['популярности', 'цене', 'алфавиту']
+
+    const onClickSelectedHandler = (value: string) => {
+        setSelected(value)
+        setOpen(!open)
+    }
+    const onBlurHandler = () => {
+        setOpen(false)
+    }
+
     return (
-        <div className="sort">
+        <div onBlur={onBlurHandler} tabIndex={0}  className="sort">
             <div className="sort__label">
                 <svg
                     width="10"
@@ -17,15 +32,21 @@ export const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span>популярности</span>
+                <span onClick={()=>setOpen(!open)} >{selected}</span>
             </div>
-            <div className="sort__popup">
-                <ul>
-                    <li className="active">популярности</li>
-                    <li>цене</li>
-                    <li>алфавиту</li>
-                </ul>
-            </div>
+            {
+                open
+                    ? <div className="sort__popup">
+                        <ul>
+                            {
+                                menu.map((value, i) =>
+                                    <li onClick={()=>onClickSelectedHandler(value)} className={selected === value ? 'active': ''}>{value}</li>)
+                            }
+                        </ul>
+                    </div>
+                    : ''
+            }
+
         </div>
     )
 }

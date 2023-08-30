@@ -34,13 +34,13 @@ export const PizzaContent: React.FC<PizzaContentTypeProps> = ({pizza, ...props})
                 <ul>
                     {
                         pizza.types.map((t, i) =>
-                            <li onClick={()=>setSelectedType(i)} className={selectedType === i ? 'active': ''}>{typeNames[t]}</li>)
+                            <li key={i} onClick={()=>setSelectedType(i)} className={selectedType === i ? 'active': ''}>{typeNames[t]}</li>)
                     }
                 </ul>
                 <ul>
                     {
                         pizza.sizes.map((s, i) =>
-                            <li onClick={()=>setSelectedSize(i)} className={selectedSize === i ? 'active': ''}>{s} см.</li>)
+                            <li key={i} onClick={()=>setSelectedSize(i)} className={selectedSize === i ? 'active': ''}>{s} см.</li>)
                     }
                 </ul>
             </div>
