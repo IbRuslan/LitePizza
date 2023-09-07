@@ -27,5 +27,8 @@ export const PizzaApi = {
     },
 	getPizzasCategory(category: number, sort: string) {
 		return instance.get<GetPizzasType>(`/items?category=${category}&sortBy=${sort}`)
+	},
+	getSearchPizzas(title: string) {
+		return instance.get<GetPizzasType>(`/items?title=${title}`)
 	}
 }

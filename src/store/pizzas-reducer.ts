@@ -49,3 +49,17 @@ export const GetPizzasCategoryTC = (category: number, sort: string) => (dispatch
             dispatch(setStatusLoadingAC(false))
         })
 }
+
+export const GetSelectedPizzasTC = (title: string) => (dispatch: Dispatch<ActionPizzaType>) => {
+    dispatch(setStatusLoadingAC(true))
+    PizzaApi.getSearchPizzas(title)
+        .then(res => {
+            dispatch(getPizzasAC(res.data))
+        })
+        .catch(e => {
+            console.log(e)
+        })
+        .finally(()=>{
+            dispatch(setStatusLoadingAC(false))
+        })
+}
