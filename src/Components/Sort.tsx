@@ -1,15 +1,23 @@
 import React, {useState} from "react";
 
-export const Sort = () => {
+export type menuSortType = {
+    name: 'популярности' | 'цене' | 'алфавиту'
+    sort: 'rating' | 'price' | 'title'
+}
 
-    const [selected, setSelected] = useState('популярности')
+type SortType = {
+    value: menuSortType
+    onClickCallback: (i: menuSortType) => void
+}
+
+export const Sort: React.FC<SortType> = ({value, onClickCallback}) => {
 
     const [open, setOpen] = useState(false)
 
-    const menu = ['популярности', 'цене', 'алфавиту']
+    const menu: menuSortType[] = [ {name: 'популярности', sort: 'rating'}, {name: 'цене', sort: 'price'}, {name: 'алфавиту', sort: 'title'}]
 
-    const onClickSelectedHandler = (value: string) => {
-        setSelected(value)
+    const onClickSelectedHandler = (value: menuSortType) => {
+        onClickCallback(value)
         setOpen(!open)
     }
     const onBlurHandler = () => {
@@ -32,15 +40,15 @@ export const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={()=>setOpen(!open)} >{selected}</span>
+                <span onClick={()=>setOpen(!open)} >{value.name}</span>
             </div>
             {
                 open
                     ? <div className="sort__popup">
                         <ul>
                             {
-                                menu.map((value, i) =>
-                                    <li onClick={()=>onClickSelectedHandler(value)} className={selected === value ? 'active': ''}>{value}</li>)
+                                menu.map((el, i) =>
+                                    <li onClick={()=>onClickSelectedHandler(el)} className={el.name === value.name ? 'active': ''}>{el.name}</li>)
                             }
                         </ul>
                     </div>

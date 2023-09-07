@@ -2,8 +2,7 @@ import axios from "axios";
 
 
 const instance = axios.create({
-    baseURL: 'https://0e7b2c01e3ad5556.mokky.dev',
-    withCredentials: true
+    baseURL: 'https://64f97c1a4098a7f2fc147ac4.mockapi.io/api/',
 })
 
 export type Pizzas = {
@@ -23,7 +22,10 @@ export type GetPizzasType = {
 
 
 export const PizzaApi = {
-    getPizzas() {
-        return instance.get<GetPizzasType>('/items')
-    }
+    getPizzas(sort: string) {
+        return instance.get<GetPizzasType>(`/items?sortBy=${sort}`)
+    },
+	getPizzasCategory(category: number, sort: string) {
+		return instance.get<GetPizzasType>(`/items?category=${category}&sortBy=${sort}`)
+	}
 }

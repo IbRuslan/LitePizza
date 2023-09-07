@@ -1,13 +1,17 @@
-import React, {useState} from "react";
+import React from "react";
 
-export const Categories = () => {
 
-    const [active, setActive] = useState(0)
+type CategoriesType = {
+    value: number
+    onClickCallback: (i: number) => void
+}
+
+export const Categories: React.FC<CategoriesType> = ({value, onClickCallback}) => {
 
     const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
 
     const onClickCategoryHandler = (index: number) => {
-        setActive(index)
+        onClickCallback(index)
     }
 
     return (
@@ -15,7 +19,7 @@ export const Categories = () => {
             <ul>
                 {
                     categories.map((c, i) =>
-                    <li key={i} onClick={()=> onClickCategoryHandler(i)} className={active === i ? 'active' : ''} >{c}</li>)
+                    <li key={i} onClick={()=> onClickCategoryHandler(i)} className={value === i ? 'active' : ''} >{c}</li>)
                 }
             </ul>
         </div>
