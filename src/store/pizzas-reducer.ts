@@ -1,17 +1,34 @@
 import {Dispatch} from "redux";
 import {PizzaApi, Pizzas} from "../api/api";
 import {ActionAppType, setStatusLoadingAC} from "./app-reducer";
+import {menuSortType} from "../Components/Sort";
 
-const initialState = [] as Pizzas[]
-export type PizzasState  = Pizzas[]
+export type CategoriesType = {
+    name: "Все" | "Мясные" | "Вегетарианская" | "Гриль" | "Острые" | "Закрытые",
+    category: 0 | 1 | 2 | 3 | 4 | 5
+}
+
+const initialState = {
+    pizzas: [] as Pizzas[],
+    mainCategory: {name: "Все", category: 0} as CategoriesType,
+    mainSort: { name: 'популярности', sort: 'rating' } as menuSortType,
+}
+export type PizzasState = typeof initialState
 
 export type ActionPizzaType =
-    | ReturnType<typeof getPizzasAC> | ActionAppType
+    | ReturnType<typeof getPizzasAC>
+    | ReturnType<typeof changeCategory>
+    | ReturnType<typeof changeSort>
+    | ActionAppType
 
 export const pizzasReducer = (state: PizzasState = initialState, action: ActionPizzaType): PizzasState => {
     switch (action.type) {
         case "GET-PIZZAS":
-            return action.pizzas
+            return {...state, pizzas: action.pizzas}
+        case "CHANGE-CATEGORY":
+            return {...state, mainCategory: action.category}
+        case "CHANGE-SORT":
+            return {...state, mainSort: action.sort}
         default:
             return state
     }
@@ -21,45 +38,40 @@ export const pizzasReducer = (state: PizzasState = initialState, action: ActionP
 export const getPizzasAC = (pizzas: any) => (
     {type: 'GET-PIZZAS', pizzas} as const
 )
+export const changeCategory = (category: CategoriesType) => (
+    {type: 'CHANGE-CATEGORY', category } as const
+)
+export const changeSort = (sort: menuSortType) => (
+    {type: 'CHANGE-SORT', sort} as const
+)
 
-export const GetPizzasTC = (sort: string) => (dispatch: Dispatch<ActionPizzaType>) => {
+export const GetPizzasCategoryTC = (category: CategoriesType, sort: menuSortType) => (dispatch: Dispatch<ActionPizzaType>) => {
     dispatch(setStatusLoadingAC(true))
-    PizzaApi.getPizzas(sort)
+    PizzaApi.getPizzasCategory(category.category, sort.sort)
         .then(res => {
             dispatch(getPizzasAC(res.data))
+            dispatch(changeCategory(category))
+            dispatch(changeSort(sort))
         })
         .catch(e => {
             console.log(e)
         })
-        .finally(()=>{
+        .finally(() => {
             dispatch(setStatusLoadingAC(false))
         })
 }
 
-export const GetPizzasCategoryTC = (category: number, sort: string) => (dispatch: Dispatch<ActionPizzaType>) => {
+export const GetSelectedPizzasTC = (category: number, sort: string, title: string) => (dispatch: Dispatch<ActionPizzaType>) => {
     dispatch(setStatusLoadingAC(true))
-    PizzaApi.getPizzasCategory(category, sort)
+    PizzaApi.getSearchPizzas(category, sort, title)
         .then(res => {
+            debugger
             dispatch(getPizzasAC(res.data))
         })
         .catch(e => {
             console.log(e)
         })
-        .finally(()=>{
-            dispatch(setStatusLoadingAC(false))
-        })
-}
-
-export const GetSelectedPizzasTC = (title: string) => (dispatch: Dispatch<ActionPizzaType>) => {
-    dispatch(setStatusLoadingAC(true))
-    PizzaApi.getSearchPizzas(title)
-        .then(res => {
-            dispatch(getPizzasAC(res.data))
-        })
-        .catch(e => {
-            console.log(e)
-        })
-        .finally(()=>{
+        .finally(() => {
             dispatch(setStatusLoadingAC(false))
         })
 }

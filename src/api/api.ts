@@ -6,14 +6,14 @@ const instance = axios.create({
 })
 
 export type Pizzas = {
-	id: number;
-	imageUrl: string;
-	title: string;
-	types: number[];
-	sizes: number[];
-	price: number;
-	category: number;
-	rating: number;
+    id: number;
+    imageUrl: string;
+    title: string;
+    types: number[];
+    sizes: number[];
+    price: number;
+    category: number;
+    rating: number;
 }
 
 export type GetPizzasType = {
@@ -22,13 +22,17 @@ export type GetPizzasType = {
 
 
 export const PizzaApi = {
-    getPizzas(sort: string) {
+    getPizzasCategory(category: number, sort: string) {
+        debugger
+        if (category !== 0) {
+            return instance.get<GetPizzasType>(`/items?category=${category}&sortBy=${sort}`)
+        }
         return instance.get<GetPizzasType>(`/items?sortBy=${sort}`)
     },
-	getPizzasCategory(category: number, sort: string) {
-		return instance.get<GetPizzasType>(`/items?category=${category}&sortBy=${sort}`)
-	},
-	getSearchPizzas(title: string) {
-		return instance.get<GetPizzasType>(`/items?title=${title}`)
-	}
+    getSearchPizzas(category: number, sort: string, title: string) {
+        if (category !== 0) {
+            return instance.get<GetPizzasType>(`/items?title=${title}&category=${category}&sortBy=${sort}`)
+        }
+        return instance.get<GetPizzasType>(`/items?sortBy=${sort}&title=${title}`)
+    }
 }

@@ -1,16 +1,23 @@
 import React from "react";
+import {CategoriesType} from "../store/pizzas-reducer";
 
-
-type CategoriesType = {
-    value: number
-    onClickCallback: (i: number) => void
+type CategoriesPropsType = {
+    value: CategoriesType
+    onClickCallback: (value: CategoriesType) => void
 }
 
-export const Categories: React.FC<CategoriesType> = ({value, onClickCallback}) => {
+export const Categories: React.FC<CategoriesPropsType> = ({value, onClickCallback}) => {
 
-    const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
+    const categories: CategoriesType[] = [
+        {name: 'Все', category: 0},
+        {name: 'Мясные', category: 1},
+        {name: 'Вегетарианская', category: 2},
+        {name: 'Гриль', category: 3},
+        {name: 'Острые', category: 4},
+        {name: 'Закрытые', category: 5}
+    ]
 
-    const onClickCategoryHandler = (index: number) => {
+    const onClickCategoryHandler = (index: CategoriesType) => {
         onClickCallback(index)
     }
 
@@ -19,7 +26,7 @@ export const Categories: React.FC<CategoriesType> = ({value, onClickCallback}) =
             <ul>
                 {
                     categories.map((c, i) =>
-                    <li key={i} onClick={()=> onClickCategoryHandler(i)} className={value === i ? 'active' : ''} >{c}</li>)
+                    <li key={i} onClick={()=> onClickCategoryHandler(c)} className={value.name === c.name ? 'active' : ''} >{c.name}</li>)
                 }
             </ul>
         </div>

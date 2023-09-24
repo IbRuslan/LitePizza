@@ -7,7 +7,7 @@ export type menuSortType = {
 
 type SortType = {
     value: menuSortType
-    onClickCallback: (i: menuSortType) => void
+    onClickCallback: (sort: menuSortType) => void
 }
 
 export const Sort: React.FC<SortType> = ({value, onClickCallback}) => {
