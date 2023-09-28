@@ -1,18 +1,7 @@
 import React, {useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../store/store";
-import {addProduct, CartPizzaType} from "../../store/cart-reducer";
+import {addProduct} from "../../store/cart-reducer";
 import {Pizzas} from "../../api/api";
-
-// export type PizzaItem = {
-// 	id: number;
-// 	imageUrl: string;
-// 	title: string;
-// 	types: number[];
-// 	sizes: number[];
-// 	price: number;
-// 	category: number;
-// 	rating: number;
-// }
 
 type PizzaContentTypeProps = {
     pizza: Pizzas
@@ -24,7 +13,8 @@ export const PizzaContent: React.FC<PizzaContentTypeProps> = ({pizza, ...props})
     const [selectedType, setSelectedType] = useState(0)
     const typeNames = ['тонкое', 'традиционное']
 
-    const { items, totalPrice } = useAppSelector(state => state.cart)
+    const itemCount = useAppSelector(state => state.cart.items.find(p => p.id === pizza.id))
+    const count = itemCount ? itemCount.count : 0
     const dispatch = useAppDispatch()
 
     const onClickAddProduct = (item: Pizzas) => {
@@ -71,7 +61,9 @@ export const PizzaContent: React.FC<PizzaContentTypeProps> = ({pizza, ...props})
                             />
                         </svg>
                         <span>Добавить</span>
-                        <i>2</i>
+                        {
+                            count > 0 && <i>{count}</i>
+                        }
                     </div>
                 </div>
             </div>

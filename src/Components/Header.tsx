@@ -5,7 +5,7 @@ import {useAppSelector} from "../store/store";
 
 export const Header = () => {
 
-    const { items, totalPrice } = useAppSelector(state => state.cart)
+    const { totalCount, totalPrice } = useAppSelector(state => state.cart)
 
     return (
         <div className="header">
@@ -53,7 +53,7 @@ export const Header = () => {
                                 strokeLinejoin="round"
                             />
                         </svg>
-                        <span>{items.length}</span>
+                        <span>{totalCount}</span>
                     </Link>
                 </div>
             </div>
