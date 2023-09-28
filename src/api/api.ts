@@ -16,23 +16,22 @@ export type Pizzas = {
     rating: number;
 }
 
-export type GetPizzasType = {
-    pizza: Pizzas[]
-}
+// export type GetPizzasType = {
+//     pizza: Pizzas[]
+// }
 
 
 export const PizzaApi = {
     getPizzasCategory(category: number, sort: string) {
-        debugger
         if (category !== 0) {
-            return instance.get<GetPizzasType>(`/items?category=${category}&sortBy=${sort}`)
+            return instance.get<Pizzas[]>(`/items?category=${category}&sortBy=${sort}`)
         }
-        return instance.get<GetPizzasType>(`/items?sortBy=${sort}`)
+        return instance.get<Pizzas[]>(`/items?sortBy=${sort}`)
     },
     getSearchPizzas(category: number, sort: string, title: string) {
         if (category !== 0) {
-            return instance.get<GetPizzasType>(`/items?title=${title}&category=${category}&sortBy=${sort}`)
+            return instance.get<Pizzas[]>(`/items?title=${title}&category=${category}&sortBy=${sort}`)
         }
-        return instance.get<GetPizzasType>(`/items?sortBy=${sort}&title=${title}`)
+        return instance.get<Pizzas[]>(`/items?sortBy=${sort}&title=${title}`)
     }
 }

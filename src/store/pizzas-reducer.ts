@@ -35,7 +35,7 @@ export const pizzasReducer = (state: PizzasState = initialState, action: ActionP
 }
 
 
-export const getPizzasAC = (pizzas: any) => (
+export const getPizzasAC = (pizzas: Pizzas[]) => (
     {type: 'GET-PIZZAS', pizzas} as const
 )
 export const changeCategory = (category: CategoriesType) => (
@@ -49,6 +49,7 @@ export const GetPizzasCategoryTC = (category: CategoriesType, sort: menuSortType
     dispatch(setStatusLoadingAC(true))
     PizzaApi.getPizzasCategory(category.category, sort.sort)
         .then(res => {
+            console.log(res.data)
             dispatch(getPizzasAC(res.data))
             dispatch(changeCategory(category))
             dispatch(changeSort(sort))
@@ -65,7 +66,6 @@ export const GetSelectedPizzasTC = (category: number, sort: string, title: strin
     dispatch(setStatusLoadingAC(true))
     PizzaApi.getSearchPizzas(category, sort, title)
         .then(res => {
-            debugger
             dispatch(getPizzasAC(res.data))
         })
         .catch(e => {

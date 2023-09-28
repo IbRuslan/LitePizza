@@ -1,26 +1,36 @@
 import React, {useState} from "react";
+import {useAppDispatch, useAppSelector} from "../../store/store";
+import {addProduct, CartPizzaType} from "../../store/cart-reducer";
+import {Pizzas} from "../../api/api";
 
-export type PizzaItem = {
-	id: number;
-	imageUrl: string;
-	title: string;
-	types: number[];
-	sizes: number[];
-	price: number;
-	category: number;
-	rating: number;
-}
+// export type PizzaItem = {
+// 	id: number;
+// 	imageUrl: string;
+// 	title: string;
+// 	types: number[];
+// 	sizes: number[];
+// 	price: number;
+// 	category: number;
+// 	rating: number;
+// }
 
 type PizzaContentTypeProps = {
-    pizza: PizzaItem
+    pizza: Pizzas
 }
 
 export const PizzaContent: React.FC<PizzaContentTypeProps> = ({pizza, ...props}) => {
 
     const [selectedSize, setSelectedSize] = useState(0)
     const [selectedType, setSelectedType] = useState(0)
-
     const typeNames = ['тонкое', 'традиционное']
+
+    const { items, totalPrice } = useAppSelector(state => state.cart)
+    const dispatch = useAppDispatch()
+
+    const onClickAddProduct = (item: Pizzas) => {
+        dispatch(addProduct(item))
+    }
+
 
     return (
         <div className='pizza-block-wrapper'>
@@ -45,7 +55,7 @@ export const PizzaContent: React.FC<PizzaContentTypeProps> = ({pizza, ...props})
                         }
                     </ul>
                 </div>
-                <div className="pizza-block__bottom">
+                <div className="pizza-block__bottom" onClick={()=>onClickAddProduct(pizza)}>
                     <div className="pizza-block__price">от {pizza.price} ₽</div>
                     <div className="button button--outline button--add">
                         <svg
