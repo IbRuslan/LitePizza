@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/LitePizza/static/css/main.10fa2447.css",
+    "main.js": "/LitePizza/static/js/main.c18e1fa8.js",
+    "index.html": "/LitePizza/index.html",
+    "static/media/search_icon.svg": "/LitePizza/static/media/search_icon.1ca7eabfc5bcb8a189d313e1efcae881.svg",
+    "static/media/delete_icon.svg": "/LitePizza/static/media/delete_icon.2001e956d267bc9b1a2349ee0a8ee521.svg",
+    "main.10fa2447.css.map": "/LitePizza/static/css/main.10fa2447.css.map",
+    "main.c18e1fa8.js.map": "/LitePizza/static/js/main.c18e1fa8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.10fa2447.css",
+    "static/js/main.c18e1fa8.js"
+  ]
+}
