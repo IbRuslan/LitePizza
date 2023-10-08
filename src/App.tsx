@@ -13,9 +13,9 @@ const App = () => {
             <Header/>
             <div className="content">
                     <Routes>
-                        <Route path={'/'} element={<Home/>} />
-                        <Route path={'/cart'} element={<Cart/>} />
-                        <Route path={'*'} element={<NotFound/>} />
+                        <Route path={'/LitePizza'} element={<Home/>} />
+                        <Route path={'/LitePizza/cart'} element={<Cart/>} />
+                        <Route path={'/LitePizza/*'} element={<NotFound/>} />
                     </Routes>
             </div>
         </div>
